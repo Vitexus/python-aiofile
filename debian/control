@@ -1,0 +1,22 @@
+Source: aiofile
+Section: python
+Priority: optional
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               pybuild-plugin-pyproject,
+               python3-all,
+               python3-hatchling,
+Standards-Version: 4.7.2
+Homepage: https://github.com/mosquito/aiofile
+Rules-Requires-Root: no
+Vcs-Browser: https://github.com/Vitexus/python-aiofile
+Vcs-Git: https://github.com/Vitexus/python-aiofile.git
+
+Package: python3-aiofile
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends},
+         python3-caio (>= 0.12.0),
+Description: Real asynchronous file operations with asyncio support
+ This module provides real async support for asynchronous file
+ operations using Linux AIO API and Python asyncio module.

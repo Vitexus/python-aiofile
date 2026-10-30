@@ -1,0 +1,19 @@
+#! /usr/bin/make -f
+
+export PYBUILD_NAME=aiofile
+UPSTREAM_VERSION := $(shell dpkg-parsechangelog -S Version | sed 's/-[^-]*$$//')
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+# The git tag ships an outdated version string in pyproject.toml (CI injects it at
+# release time); take the real one from debian/changelog.
+override_dh_auto_configure:
+	sed -i 's/^version = ".*"/version = "$(UPSTREAM_VERSION)"/' pyproject.toml
+	dh_auto_configure
+
+override_dh_auto_clean:
+	dh_auto_clean
+	git checkout pyproject.toml 2>/dev/null || true
+
+# Upstream tests need aiomisc-pytest and other unpackaged test dependencies.
+override_dh_auto_test:
